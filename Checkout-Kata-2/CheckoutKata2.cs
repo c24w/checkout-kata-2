@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace Checkout_Kata_2
 {
@@ -40,28 +41,49 @@ namespace Checkout_Kata_2
 
 	public class Checkout
 	{
+		private int _itemACount;
+		private int _itemBCount;
 		public int Total { get; private set; }
+
+		readonly Dictionary<char, int> _priceLookup = new Dictionary<char, int>
+		{
+			{'a', 50},
+			{'b', 30}
+		};
+
+		public Checkout()
+		{
+			_itemACount = 0;
+			_itemBCount = 0;
+		}
 
 		public void Scan(string basket)
 		{
 			var items = basket.ToCharArray();
-			var numAs = 0;
-			var numBs = 0;
+
 			foreach (var item in items)
+				AddItemPrice(item);
+			SubtractDiscounts();
+		}
+
+		private void AddItemPrice(char item)
+		{
+			Total += _priceLookup[item];
+			switch (item)
 			{
-				if (item == 'a')
-				{
-					++numAs;
-					Total += 50;
-				}
-				else if (item == 'b')
-				{
-					++numBs;
-					Total += 30;
-				}
+				case 'a':
+					++_itemACount;
+					break;
+				case 'b':
+					++_itemBCount;
+					break;
 			}
-			if (numAs == 3) Total -= 20;
-			if (numBs == 2) Total -= 15;
+		}
+
+		private void SubtractDiscounts()
+		{
+			if (_itemACount == 3) Total -= 20;
+			if (_itemBCount == 2) Total -= 15;
 		}
 	}
 }
