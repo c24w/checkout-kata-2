@@ -41,6 +41,9 @@ namespace Checkout_Kata_2
 		}
 
 		[TestCase("ab", 80)]
+		[TestCase("aaab", 160)]
+		[TestCase("abbbb", 140)]
+		[TestCase("aaabb", 175)]
 		public void Checkout_scan_mixed_basket_should_return_the_expected_total(string basket, int expectedTotal)
 		{
 			var checkout = new Checkout();
