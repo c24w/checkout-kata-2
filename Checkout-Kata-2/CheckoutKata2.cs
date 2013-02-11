@@ -24,6 +24,18 @@ namespace Checkout_Kata_2
 			checkout.Scan(basket);
 			Assert.That(checkout.Total, Is.EqualTo(expectedTotal));
 		}
+
+		[TestCase(1, 30)]
+		[TestCase(2, 45)]
+		public void Checkout_scan_number_of_item_b_should_return_the_expected_total(int numberOfBs, int expectedTotal)
+		{
+			var checkout = new Checkout();
+			var basket = "";
+			for (var i = 0; i < numberOfBs; i++)
+				basket += 'b';
+			checkout.Scan(basket);
+			Assert.That(checkout.Total, Is.EqualTo(expectedTotal));
+		}
 	}
 
 	public class Checkout
@@ -34,12 +46,22 @@ namespace Checkout_Kata_2
 		{
 			var items = basket.ToCharArray();
 			var numAs = 0;
+			var numBs = 0;
 			foreach (var item in items)
 			{
-				++numAs;
-				Total += 50;
+				if (item == 'a')
+				{
+					++numAs;
+					Total += 50;
+				}
+				else if (item == 'b')
+				{
+					++numBs;
+					Total += 30;
+				}
 			}
 			if (numAs == 3) Total -= 20;
+			if (numBs == 2) Total -= 15;
 		}
 	}
 }
