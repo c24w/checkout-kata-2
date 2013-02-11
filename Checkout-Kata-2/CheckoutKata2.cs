@@ -21,8 +21,7 @@ namespace Checkout_Kata_2
 		{
 			var checkout = new Checkout();
 			var basket = "";
-			for (var i = 0; i < numberOfAs; i++)
-				basket += 'a';
+			basket = GetBasketForNumberOfItems(numberOfAs, 'a');
 			checkout.ScanBasket(basket);
 			Assert.That(checkout.Total, Is.EqualTo(expectedTotal));
 		}
@@ -34,10 +33,28 @@ namespace Checkout_Kata_2
 		{
 			var checkout = new Checkout();
 			var basket = "";
-			for (var i = 0; i < numberOfBs; i++)
-				basket += 'b';
+			basket = GetBasketForNumberOfItems(numberOfBs, 'b');
 			checkout.ScanBasket(basket);
 			Assert.That(checkout.Total, Is.EqualTo(expectedTotal));
+		}
+
+		[Ignore]
+		[TestCase(1, 30)]
+		public void Checkout_scan_number_of_item_c_should_return_the_expected_total(int numberOfCs, int expectedTotal)
+		{
+			var checkout = new Checkout();
+			var basket = "";
+			basket = GetBasketForNumberOfItems(numberOfCs, 'c');
+			checkout.ScanBasket(basket);
+			Assert.That(checkout.Total, Is.EqualTo(expectedTotal));
+		}
+
+		private static string GetBasketForNumberOfItems(int numberOfBs, char item)
+		{
+			string basket = "";
+			for (var i = 0; i < numberOfBs; i++)
+				basket += item;
+			return basket;
 		}
 
 		[TestCase("ab", 80)]
