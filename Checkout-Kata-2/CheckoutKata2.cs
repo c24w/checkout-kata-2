@@ -23,7 +23,7 @@ namespace Checkout_Kata_2
 			var basket = "";
 			for (var i = 0; i < numberOfAs; i++)
 				basket += 'a';
-			checkout.Scan(basket);
+			checkout.ScanBasket(basket);
 			Assert.That(checkout.Total, Is.EqualTo(expectedTotal));
 		}
 
@@ -36,7 +36,15 @@ namespace Checkout_Kata_2
 			var basket = "";
 			for (var i = 0; i < numberOfBs; i++)
 				basket += 'b';
-			checkout.Scan(basket);
+			checkout.ScanBasket(basket);
+			Assert.That(checkout.Total, Is.EqualTo(expectedTotal));
+		}
+
+		[TestCase("ab", 80)]
+		public void Checkout_scan_mixed_basket_should_return_the_expected_total(string basket, int expectedTotal)
+		{
+			var checkout = new Checkout();
+			checkout.ScanBasket(basket);
 			Assert.That(checkout.Total, Is.EqualTo(expectedTotal));
 		}
 	}
@@ -59,7 +67,7 @@ namespace Checkout_Kata_2
 			_itemBCount = 0;
 		}
 
-		public void Scan(string basket)
+		public void ScanBasket(string basket)
 		{
 			var items = basket.ToCharArray();
 
