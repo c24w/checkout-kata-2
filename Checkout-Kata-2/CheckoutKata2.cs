@@ -16,6 +16,7 @@ namespace Checkout_Kata_2
 		[TestCase(1, 50)]
 		[TestCase(2, 100)]
 		[TestCase(3, 130)]
+		[TestCase(6, 260)]
 		public void Checkout_scan_number_of_item_a_should_return_the_expected_total(int numberOfAs, int expectedTotal)
 		{
 			var checkout = new Checkout();
@@ -28,6 +29,7 @@ namespace Checkout_Kata_2
 
 		[TestCase(1, 30)]
 		[TestCase(2, 45)]
+		[TestCase(4, 90)]
 		public void Checkout_scan_number_of_item_b_should_return_the_expected_total(int numberOfBs, int expectedTotal)
 		{
 			var checkout = new Checkout();
@@ -82,8 +84,10 @@ namespace Checkout_Kata_2
 
 		private void SubtractDiscounts()
 		{
-			if (_itemACount == 3) Total -= 20;
-			if (_itemBCount == 2) Total -= 15;
+			var aDiscount = _itemACount / 3 * 20;
+			var bDiscount = _itemBCount / 2 * 15;
+			Total -= aDiscount;
+			Total -= bDiscount;
 		}
 	}
 }
